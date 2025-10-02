@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import toast from "react-hot-toast";
 
-import { getIdeas, postIdea } from "../helpers/api";
+import { getIdeas, post } from "../helpers/api";
 import IdeaCard from "../components/IdeaCard";
 import { MAX_TEXT_LENGTH } from "../helpers/constants";
 
@@ -21,7 +21,7 @@ export default function AppPage() {
 
   useEffect(() => {
     // load existing ideas
-    getIdeas("/api/ideas")
+    getIdeas()
       .then((data) => setIdeas(data))
       .catch((err) => {
         console.error("fetch ideas failed", err);
@@ -66,7 +66,7 @@ export default function AppPage() {
     }
     setSubmitting(true);
     try {
-      await postIdea("/api/ideas", { text: text.trim() });
+      await post("/api/ideas", { text: text.trim() });
       setText("");
       //   toast.success("Idea submitted!");
     } catch (err) {
@@ -80,7 +80,7 @@ export default function AppPage() {
   const onUpvote = async (id) => {
     setUpvoteInFlight((s) => ({ ...s, [id]: true }));
     try {
-      await postIdea(`/api/ideas/${id}/upvote`);
+      await post(`/api/ideas/${id}/upvote`);
     } catch (err) {
       console.error(err);
       toast.error("Failed to upvote");

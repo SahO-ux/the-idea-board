@@ -10,12 +10,12 @@ const api = axios.create({
 });
 
 // Generic wrappers
-export const getIdeas = async (url, config = {}) => {
+export const getIdeas = async (url = "/api/ideas", config = {}) => {
   const res = await api.get(url, config);
   return res.data;
 };
 
-export const postIdea = async (url, data = {}, config = {}) => {
+export const post = async (url, data = {}, config = {}) => {
   const res = await api.post(url, data, config);
   return res.data;
 };
