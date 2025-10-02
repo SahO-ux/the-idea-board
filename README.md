@@ -67,6 +67,11 @@ docker compose up --build
 docker compose down
 ```
 
+### 5️⃣ Stopping Containers and also remove DB data
+```bash
+docker compose down -v
+```
+
 ---
 
 ## 📡 API Endpoints
@@ -164,3 +169,4 @@ the-idea-board/
 ## 👨‍💻 Author
 
 Built with ❤️ by **Sahil Akbari** for the Fullstack Developer role assessment.
+
