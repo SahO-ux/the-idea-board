@@ -15,14 +15,15 @@ export default function IdeaCard({ idea, onUpvote, disabled }) {
           if (e.key === "Enter") setIsOpen(true);
         }}
       >
-        {/* Single-line truncation */}
-        <p className="truncate text-gray-800 mb-1">{idea.text}</p>
+        {/* Wrapping container ensures truncation works */}
+        <div className="w-full min-w-0">
+          <p className="truncate text-gray-800">{idea.text}</p>
+        </div>
 
-        {/* Read more */}
-        <p className="text-xs text-indigo-600 mb-3">Read more →</p>
+        {/* Read more link */}
+        <p className="text-xs text-indigo-600 mt-1">Read more →</p>
 
-        {/* This flex row must allow children to shrink: add min-w-0 */}
-        <div className="flex items-center justify-between flex-nowrap min-w-0">
+        <div className="flex items-center justify-between mt-3">
           <div className="text-sm text-gray-500">
             Posted{" "}
             {new Date(idea.createdAt || idea.created_at).toLocaleString()}
@@ -35,7 +36,7 @@ export default function IdeaCard({ idea, onUpvote, disabled }) {
                 onUpvote(idea.id);
               }}
               disabled={disabled}
-              className="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition flex-shrink-0"
+              className="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
             >
               Upvote
             </button>
@@ -44,6 +45,7 @@ export default function IdeaCard({ idea, onUpvote, disabled }) {
         </div>
       </div>
 
+      {/* Modal */}
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           <div className="p-6">
@@ -52,7 +54,7 @@ export default function IdeaCard({ idea, onUpvote, disabled }) {
               {idea.text}
             </p>
 
-            <div className="flex items-center justify-between flex-nowrap">
+            <div className="flex items-center justify-between">
               <div className="text-sm text-gray-500">
                 Posted{" "}
                 {new Date(idea.createdAt || idea.created_at).toLocaleString()}
