@@ -7,7 +7,7 @@ export default function IdeaCard({ idea, onUpvote, disabled }) {
   return (
     <>
       <div
-        className="p-4 bg-white rounded-lg shadow cursor-pointer"
+        className="p-4 bg-white rounded-lg shadow cursor-pointer overflow-hidden"
         onClick={() => setIsOpen(true)}
         role="button"
         tabIndex={0}
@@ -17,7 +17,7 @@ export default function IdeaCard({ idea, onUpvote, disabled }) {
       >
         {/* Wrapping container ensures truncation works */}
         <div className="w-full min-w-0">
-          <p className="truncate text-gray-800">{idea.text}</p>
+          <p className="truncate w-full block text-gray-800">{idea.text}</p>
         </div>
 
         {/* Read more link */}
