@@ -1,8 +1,25 @@
-node_modules/
-.next/
-.env
-dist/
-.DS_Store
-.vscode/
+# Node dependencies
+node_modules
 npm-debug.log
-.idea/
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# Build output
+dist
+build
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker
+*.pid
+*.seed
+*.log
+
+# Editor / system files
+.DS_Store
+.vscode
+.idea
