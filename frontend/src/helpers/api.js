@@ -7,20 +7,19 @@ const getApiBaseUrl = () => {
   return API_BASE_URL;
 };
 
-const api = axios.create({
-  baseURL: getApiBaseUrl(),
-  headers: { "Content-Type": "application/json" },
-});
-
 // Generic wrappers
 export const getIdeas = async (url = "/api/ideas", config = {}) => {
-  const res = await api.get(url, config);
+  const res = await axios.get(getApiBaseUrl() + url, {
+    headers: { "Content-Type": "application/json" },
+    ...config,
+  });
   return res.data;
 };
 
-export const post = async (url, data = {}, config = {}) => {
-  const res = await api.post(url, data, config);
+export const post = async (url = "", data = {}, config = {}) => {
+  const res = await axios.post(getApiBaseUrl() + url, data, {
+    headers: { "Content-Type": "application/json" },
+    ...config,
+  });
   return res.data;
 };
-
-export default api;
