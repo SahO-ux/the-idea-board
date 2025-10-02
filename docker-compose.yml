@@ -33,6 +33,8 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        - VITE_API_URL=${VITE_API_URL}
     env_file: .env
     depends_on:
       - backend
