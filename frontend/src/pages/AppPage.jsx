@@ -10,6 +10,7 @@ export default function AppPage() {
   const [ideas, setIdeas] = useState([]);
   const [text, setText] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [upvoteInFlight, setUpvoteInFlight] = useState({});
 
   const getBaseUrl = () => {
@@ -21,14 +22,16 @@ export default function AppPage() {
 
   useEffect(() => {
     // load existing ideas
+    const socket = io(getBaseUrl());
+
+    setIsLoading(true);
     getIdeas()
       .then((data) => setIdeas(data))
       .catch((err) => {
         console.error("fetch ideas failed", err);
         toast.error("Failed to load ideas");
-      });
-
-    const socket = io(getBaseUrl());
+      })
+      .finally(() => setIsLoading(false));
 
     socket.on("connect", () => {
       console.log("socket connected", socket.id);
@@ -123,7 +126,7 @@ export default function AppPage() {
               </div>
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || isLoading}
                 className="px-4 py-2 bg-indigo-600 text-white rounded disabled:opacity-60"
               >
                 {submitting ? "Submitting…" : "Submit Idea"}
@@ -135,7 +138,12 @@ export default function AppPage() {
         <section>
           <h2 className="text-lg font-semibold mb-4">Ideas</h2>
           {ideas.length === 0 ? (
-            <div className="text-gray-500">No ideas yet — be the first!</div>
+            <div className="text-gray-500">
+              {" "}
+              {isLoading
+                ? "Please wait, getting exceptional ideas..."
+                : "No ideas yet — be the first!"}
+            </div>
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {ideas.map((idea) => (
